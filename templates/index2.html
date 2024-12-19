@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<section>
+    <form action="/recommend" method="POST">
+        <h2>気分に合わせたピアノ曲を探そう！</h2>
+
+        <!-- Year Input -->
+        <label for="year">年代:</label>
+        <input type="number" id="year" name="year" placeholder="例: 1820">
+
+        <!-- Artist/Composer Input -->
+        <label for="artist">作曲家:</label>
+        <input type="text" id="artist" name="artist" placeholder="例: ショパン">
+
+        <!-- Sliders for Parameters -->
+        <h3>パラメーターの調整:</h3>
+        <label for="energy">エネルギー:</label>
+        <div style="display: flex; align-items: center;">
+            <span style="margin-right: 10px;">低い</span>
+            <input type="range" id="energy" name="energy" min="0" max="1" step="0.05" value="0.5"
+                oninput="document.getElementById('energy-output').value = this.value">
+            <span style="margin-left: 10px;">高い</span>
+        </div>
+        <output id="energy-output" for="energy">0.5</output>
+
+        <label for="valence">明るさ:</label>
+        <div style="display: flex; align-items: center;">
+            <span style="margin-right: 10px;">低い</span>
+            <input type="range" id="valence" name="valence" min="0" max="1" step="0.05" value="0.5"
+                oninput="document.getElementById('valence-output').value = this.value">
+            <span style="margin-left: 10px;">高い</span>
+        </div>
+        <output id="valence-output" for="valence">0.5</output>
+
+        <label for="danceability">ダンスのしやすさ:</label>
+        <div style="display: flex; align-items: center;">
+            <span style="margin-right: 10px;">低い</span>
+            <input type="range" id="danceability" name="danceability" min="0" max="1" step="0.05" value="0.5"
+                oninput="document.getElementById('danceability-output').value = this.value">
+            <span style="margin-left: 10px;">高い</span>
+        </div>
+        <output id="danceability-output" for="danceability">0.5</output>
+
+        <label for="tempo">テンポ:</label>
+        <div style="display: flex; align-items: center;">
+            <span style="margin-right: 10px;">遅い</span>
+            <input type="range" id="tempo" name="tempo" min="0" max="1" step="0.05" value="0.5"
+                oninput="document.getElementById('tempo-output').value = this.value">
+            <span style="margin-left: 10px;">速い</span>
+        </div>
+        <output id="tempo-output" for="tempo">0.5</output>
+
+
+        <label for="duration_ms">1曲あたりの長さ:</label>
+        <div style="display: flex; align-items: center;">
+            <span style="margin-right: 10px;">短い</span>
+            <input type="range" id="duration_ms" name="duration_ms" min="31000" max="1200000" step="1000" value="600000" 
+                oninput="document.getElementById('duration_ms-output').value = this.value">
+            <span style="margin-left: 10px;">長い</span>
+        </div>
+        <output id="duration_ms-output" for="duration_ms">600000</output>
+
+        <!-- Duration Input -->
+        <label for="target_duration">全体の曲の長さ(分):</label>
+        <input type="number" id="target_duration" name="target_duration" min="1" placeholder="例:15">
+
+        <label for="num_candidates">プレイリスト候補数:</label>
+        <input type="number" id="num_candidates" name="num_candidates" min="1" value="3">
+
+        <!-- Submit Button -->
+        <button type="submit">送信！</button>
+    </form>
+    
+    {% if detected_mood %}
+        <p>推定される気分: {{ detected_mood }}</p>
+    {% endif %}
+</section>
+{% endblock %}

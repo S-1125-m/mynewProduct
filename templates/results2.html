@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Results{% endblock %}
+
+{% block content %}
+<!-- ホームボタン -->
+<a href="/" class="home-button" title="ホーム">
+    <i class="fas fa-home"></i>
+</a>
+<section>
+    <h2>プレイリスト候補</h2>
+
+    {% if playlists %}
+        {% for playlist in playlists %}
+        <h3>プレイリスト {{ playlist['index'] }} ({{ playlist['total_duration'] // 60000 }} 分):</h3>
+        <ul>
+            {% for song in playlist['playlist'] %}
+            <li>
+                <strong>{{ song['track_name'] }}</strong> by {{ song['artist_name'] }}
+            </li>
+            {% endfor %}
+        </ul>
+
+        {% if playlist['spotify_link'] %}
+        <a href="{{ playlist['spotify_link'] }}" target="_blank">
+            <button>Spotifyで聴く</button>
+        </a>
+        {% else %}
+        <p><em>Spotyfiリンクが利用できません。</em></p>
+        {% endif %}
+
+        {% endfor %}
+    {% else %}
+        <p>該当する曲が見つかりませんでした。条件に最も近い曲を表示します。
+        </p>
+        <h2>代替の提案された曲</h2>
+        <ul>
+            {% for song in songs %}
+            <li>
+                <strong>{{ song['track_name'] }}</strong> by {{ song['artist_name'] }} 
+            </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <a href="/">ホームに戻る</a>
+</section>
+{% endblock %}
