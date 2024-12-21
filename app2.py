@@ -17,7 +17,7 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
 app = Flask(__name__, static_folder='static', template_folder='templates')
 
 # CSVファイルの読み込み
-file_path = '../piano2/spotify_album_features_with_popularity.csv'
+file_path = 'spotify_album_features_with_popularity.csv'
 songs_df = pd.read_csv(file_path).dropna(axis=1, how='all')
 
 import logging
